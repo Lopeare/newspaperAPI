@@ -87,17 +87,16 @@ button:focus-visible {
    text-align: center;
  }
 
+ /* Default */
  .history {
-   /* width: 20%; */
    background-color: #aeb2f8;
-   /* float: left; */
    display: none;
+   padding-top: 6em;
+
+   text-align: left;
  }
 
  .articles {
-   /* width: 80%;
-  float: right; */
-
    background-color: aqua;
  }
 
@@ -107,10 +106,12 @@ button:focus-visible {
    word-wrap: break-word;
  }
 
+ /* Higher than 800px */
  @media screen and (min-width:800px) {
    .history {
      float: left;
      width: 20%;
+     padding-right: 2em;
    }
 
    h1 {
@@ -123,9 +124,16 @@ button:focus-visible {
    }
  }
 
- /* Hacemos visibles los subtítulos para anchos de pantalla mayores a 1024px */
+ /* Higher than 500px */
  @media screen and (min-width:500px) {
    .history {
      display: flex;
+   }
+ }
+
+ /* Less than 800px */
+ @media screen and (max-width:800px) {
+   .history {
+     padding: 0;
    }
  }

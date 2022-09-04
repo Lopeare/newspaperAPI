@@ -8,7 +8,9 @@ export const searchSlice = createSlice({
     initialState,
     reducers: {
         addSearch: (state, { payload }) => {
+            console.log('Añadiendo: ', payload)
             state.history.push(payload)
+            console.log(state.history);
         },
     },
 })

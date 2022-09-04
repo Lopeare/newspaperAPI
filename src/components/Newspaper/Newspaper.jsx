@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { Routes } from 'react-router-dom';
 import { getPosts } from '../../slices/newspaperSlice'
 import { ArticlesTable } from '../ArticlesTable/ArticlesTable';
 import { History } from '../History/History';
-import { Navbar } from '../NavBar/Navbar';
 import { Search } from '../Search/Search';
 
 export const Newspaper = () => {
