@@ -1,69 +1,36 @@
-// import { createSlice } from '@reduxjs/toolkit'
-
-// const initialState = {
-//     articles: [],
-// }
-
-// export const newspaperSlice = createSlice({
-//     name: 'newspaper',
-//     initialState,
-//     reducers: {
-//         setArticles: (state, action) => {
-//             state.articles = action.payload;
-//         },
-//     },
-// })
-
-// // Action creators are generated for each case reducer function
-// export const { setArticles: increment } = newspaperSlice.actions
-
-// //export default newspaperSlice.reducer
-
-import { createSlice, createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit'
-
+import { createSlice } from '@reduxjs/toolkit'
+import { getTitles } from './newspaperThonk'
 const initialState = {
-    entities: [],
-    loading: false,
+    articles: [],
+    lastPage: 0,
+    isLoading: false,
 }
 
-export const getPosts = createAsyncThunk(
-    //action type string
-    'posts/getPosts',
-    // callback function
-    async (arg, thunkAPI) => {
-        console.log(arg)
-
-        const res = fetch('https://jsonplaceholder.typicode.com/posts')
-            .then((data) => {
-                return data.json()
-            })
-            .catch((err) => {
-                console.log(err)
-                return thunkAPI.rejectWithValue('OOPS!')
-            })
-
-        return res
-    })
-
-
-export const postSlice = createSlice({
-    name: 'posts',
+export const newspaperSlice = createSlice({
+    name: 'newspaper',
     initialState,
-    reducers: {},
+    reducers: {
+        cleanArticles: (state) => {
+            state.articles = [];
+            state.lastPage = 0;
+            console.log('limpiando')
+        }
+    },
     extraReducers: {
-        [getPosts.pending]: (state) => {
-            state.loading = true
+        [getTitles.pending]: (state) => {
+            state.isLoading = true
         },
-        [getPosts.fulfilled]: (state, action) => {
-            console.log(action)
-            state.loading = false
-            state.entities = action.payload
+        [getTitles.fulfilled]: (state, { payload }) => {
+            console.log('añadiendo')
+            state.articles = state.articles.concat(payload.items)
+            state.lastPage++;
+            state.isLoading = false
         },
-        [getPosts.rejected]: (state, action) => {
+        [getTitles.rejected]: (state, action) => {
+            state.isLoading = false
             console.log('rejected, action-> payload: ', action.payload)
-            state.loading = false
         },
     },
 })
-
-export const postReducer = postSlice.reducer
+export const { cleanArticles } = newspaperSlice.actions;
+export const newspaperReducer = newspaperSlice.reducer

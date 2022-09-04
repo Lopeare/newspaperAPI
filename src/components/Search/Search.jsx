@@ -2,14 +2,16 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSearch } from '../../slices/searchSlice'
+import { getTitles } from '../../slices/newspaperThonk'
+import { cleanArticles } from '../../slices/newspaperSlice'
 
 export const Search = () => {
 
   const dispatch = useDispatch();
 
   const [{ value, isValid }, setSearch] = useState({
-    value: '',
-    isValid: false
+    value: 'Michigan',
+    isValid: true
   })
 
   // Updating input value
@@ -30,6 +32,8 @@ export const Search = () => {
         value: '',
         isValid: false
       });
+      dispatch(cleanArticles());
+      dispatch(getTitles(value))
     }
   }
 

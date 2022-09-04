@@ -1,22 +1,44 @@
+import { useSelector } from "react-redux"
+import Table from 'react-bootstrap/Table';
 
 export const ArticlesTable = () => {
+
+    const { articles, isLoading } = useSelector((state) => state.newspaper)
+    const lastSearch = useSelector((state) => state.search.history.at(-1).value)
+    console.log(articles)
+    console.log(isLoading)
+
     return (
-        <>
-            <table>
+        <div className="dataTable">
+            <p>Results for {lastSearch}</p>
+
+
+
+            <Table striped>
                 <thead>
                     <tr>
-                        <th>
-                            The Taaaable
-                        </th>
+                        <th>Title</th>
+                        <th>Publisher</th>
+                        <th>Year</th>
+                        <th>Language</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th>Colum 1</th>
-                        <th>Colum 2</th>
-                    </tr>
-                </tbody>
-            </table>
-        </>
+                {
+                    articles.map(art => {
+                        return (
+                            <tbody key={art.id}>
+                                <tr>
+                                    <td>{art.title}</td>
+                                    <td>{art.publisher}</td>
+                                    <td>{art.start_year}</td>
+                                    <td>{art.language}</td>
+                                </tr>
+                            </tbody>
+                        )
+                    })
+                }
+            </Table>
+            {isLoading && <h1>Cargando</h1>}
+        </div>
     )
 }

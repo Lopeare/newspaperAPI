@@ -8,9 +8,12 @@ export const searchSlice = createSlice({
     initialState,
     reducers: {
         addSearch: (state, { payload }) => {
-            console.log('Añadiendo: ', payload)
-            state.history.push(payload)
-            console.log(state.history);
+            state.history.length >= 10 && state.history.shift();
+
+            state.history.push({
+                value: payload,
+                id: state.history.length == 0 ? 0 : state.history.at(-1).id + 1
+            })
         },
     },
 })
