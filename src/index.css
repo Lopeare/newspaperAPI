@@ -89,7 +89,7 @@ button:focus-visible {
 
  /* Default */
  .history {
-   background-color: #aeb2f8;
+   /* background-color: hwb(237 4% 4%); */
    display: none;
    padding-top: 6em;
 
@@ -97,13 +97,21 @@ button:focus-visible {
  }
 
  .articles {
-   background-color: aqua;
+   /* background-color: aqua; */
  }
 
  .articles,
  .history,
  .container {
    word-wrap: break-word;
+ }
+
+ .list>h4 {
+   background-color: rgb(215, 249, 249);
+   text-align: center;
+   padding: 0.4em 0.6em 0.4em 0.6em;
+   border-radius: 0.6em;
+   max-width: 140%;
  }
 
  /* Higher than 800px */
@@ -135,5 +143,6 @@ button:focus-visible {
  @media screen and (max-width:800px) {
    .history {
      padding: 0;
+     text-align: center;
    }
  }

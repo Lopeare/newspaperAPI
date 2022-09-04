@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux"
+import ListGroup from 'react-bootstrap/ListGroup';
 
 export const History = () => {
 
@@ -7,13 +8,16 @@ export const History = () => {
     console.log(history);
     return (
         <>
-            <ul><p>History Search</p>
+
+            <ListGroup className="list" variant="flush">
+                <h4>Search History</h4>
                 {
                     history.map(search =>
-                        < li key={search}> {search}</li>
+                        < ListGroup.Item
+                            key={search}> {search}</ListGroup.Item>
                     )
                 }
-            </ul>
+            </ListGroup>
         </>
     )
 }

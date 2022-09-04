@@ -20,6 +20,8 @@ export const Newspaper = () => {
     }, [])
     /////////////////////////////////////////////////////////////////////
 
+    const { history } = useSelector((state) => state.search);
+
     return (
         <>
             <div className="articles">
@@ -27,7 +29,7 @@ export const Newspaper = () => {
                 <ArticlesTable />
             </div>
             <div className="history">
-                <History />
+                {history.length > 0 && <History />}
             </div>
         </>
     )
