@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux"
 import Table from 'react-bootstrap/Table';
 
-export const ArticlesTable = () => {
+export const ArticlesTable = ({ startOffset, endOffset }) => {
 
     const { articles, isLoading } = useSelector((state) => state.api)
     const lastSearch = useSelector((state) => state.search.history.at(-1).value)
     // console.log(articles)
     // console.log(isLoading)
 
+    console.log(startOffset + ' ' + endOffset)
     return (
         <>
             <p>Results for {lastSearch}</p>
@@ -22,7 +23,7 @@ export const ArticlesTable = () => {
                 </thead>
                 <tbody >
                     {
-                        articles.map(art =>
+                        articles.slice(startOffset, endOffset).map(art =>
                         (
                             <tr key={art.id}>
                                 <td>{art.title}</td>
@@ -37,5 +38,4 @@ export const ArticlesTable = () => {
             {isLoading && <h1>Loading...</h1>}
         </>
     )
-
 }

@@ -3,9 +3,9 @@ import { getTitles } from './apiThonk'
 
 const initialState = {
     articles: [],
-    lastApiPage: 0,
-    noMoreApiPages: false,
-    itemsPerRequest: 50,
+    lastPage: 0,
+    noMorePages: false,
+    itemsPerRequest: 50, // setear esto automaticamente la primera vez que hace una llamada a la api , lo comprobamos y lo seteamos
     isLoading: false,
 }
 
@@ -15,7 +15,7 @@ export const apiSlice = createSlice({
     reducers: {
         cleanArticles: (state) => {
             state.articles = [];
-            state.lastApiPage = 0;
+            state.lastPage = 0;
         },
     },
     extraReducers: {
@@ -24,14 +24,14 @@ export const apiSlice = createSlice({
         },
         [getTitles.fulfilled]: (state, { payload }) => {
             state.articles = state.articles.concat(payload.items)
-            state.lastApiPage++;
+            state.lastPage++;
             state.isLoading = false
             if (state.itemsPerRequest > payload.items.length)
-                state.noMoreApiPages = true
+                state.noMorePages = true
         },
         [getTitles.rejected]: (state, action) => {
             state.isLoading = false
-            state.noMoreApiPages = true
+            state.noMorePages = true
             console.log('rejected, action-> payload: ', action);
             alert(action.payload)
         },

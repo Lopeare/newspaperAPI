@@ -4,7 +4,6 @@ export const getTitles = createAsyncThunk(
     //action type string
     'api/getTitles',
     // callback function
-    // añadir la pagina
     async ({ terms, page = 1 }, thunkAPI) => {
         console.log('terms: ', terms)
         console.log('page ', page)

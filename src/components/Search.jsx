@@ -23,6 +23,8 @@ export const Search = () => {
 
   // Only store the value when is valid (letters > 3)
   const onSubmit = (event) => {
+    // Setear la pagina de las paginaciones *****************************************************************
+
     event.preventDefault();
     if (isValid) {
       dispatch(addSearch(value));

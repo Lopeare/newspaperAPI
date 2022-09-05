@@ -22,6 +22,10 @@ body {
     background-color: aliceblue;
     display: flex;
     justify-content: center;
-    min-width: 70vmin;
+    width: 100vmin;
     min-height: 80vh;
 }
+
+//vertical-align: middle; en los hijos
+
+https: //blog.hubspot.com/website/center-div-css#center-div-horizontally-vertically
