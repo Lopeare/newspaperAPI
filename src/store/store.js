@@ -1,11 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { newspaperReducer } from "../slices/newspaperSlice";
-import { searchReducer } from "../slices/searchSlice";
+import { apiReducer, searchReducer } from "../slices";
 
 export const store = configureStore(
     {
         reducer: {
-            newspaper: newspaperReducer,
+            api: apiReducer,
             search: searchReducer,
         },
     }

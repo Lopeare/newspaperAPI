@@ -1,19 +1,18 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-import { Navbar } from "../components/NavBar/Navbar"
-import { Newspaper } from "../components/Newspaper/Newspaper"
-import '../index.css'
+import { NavigBar, Footer } from "../components"
+import { Home, SearchHistory } from "../pages"
 
 export const AppRoutes = () => {
     return (
         <>
-            <Navbar />
-            <div className="container">
-                <Routes>
-                    <Route path="/articles" element={<Newspaper />} />
-                    <Route path="/" element={<Navigate to="/articles" />} />
-                    <Route path="/*" element={<Newspaper />} />
-                </Routes>
-            </div>
+            <NavigBar />
+            <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/about" element={<SearchHistory />} />
+                <Route path="/" element={<Navigate to="/home" />} />
+                <Route path="/*" element={<Home />} />
+            </Routes>
+            <Footer />
         </>
     )
 }

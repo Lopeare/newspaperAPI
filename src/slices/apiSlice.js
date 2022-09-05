@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Alert } from 'bootstrap';
-import { getTitles } from './newspaperThonk'
+import { getTitles } from './apiThonk'
+
 const initialState = {
     articles: [],
     lastApiPage: 0,
@@ -9,8 +9,8 @@ const initialState = {
     isLoading: false,
 }
 
-export const newspaperSlice = createSlice({
-    name: 'newspaper',
+export const apiSlice = createSlice({
+    name: 'api',
     initialState,
     reducers: {
         cleanArticles: (state) => {
@@ -37,5 +37,5 @@ export const newspaperSlice = createSlice({
         },
     },
 })
-export const { cleanArticles } = newspaperSlice.actions;
-export const newspaperReducer = newspaperSlice.reducer
+export const { cleanArticles } = apiSlice.actions;
+export const apiReducer = apiSlice.reducer

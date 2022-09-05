@@ -1,6 +1,4 @@
-import { addSearch } from '../../slices/searchSlice'
-import { cleanArticles } from '../../slices/newspaperSlice'
-import { getTitles } from '../../slices/newspaperThonk'
+import { addSearch, cleanArticles, getTitles } from '../slices'
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';

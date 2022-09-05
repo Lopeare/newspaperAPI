@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const getTitles = createAsyncThunk(
     //action type string
-    'newspaper/getTitles',
+    'api/getTitles',
     // callback function
     // añadir la pagina
     async ({ terms, page = 1 }, thunkAPI) => {
