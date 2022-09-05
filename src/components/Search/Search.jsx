@@ -1,9 +1,9 @@
+import { addSearch } from '../../slices/searchSlice'
+import { cleanArticles } from '../../slices/newspaperSlice'
+import { getTitles } from '../../slices/newspaperThonk'
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { useDispatch, useSelector } from 'react-redux';
-import { addSearch } from '../../slices/searchSlice'
-import { getTitles } from '../../slices/newspaperThonk'
-import { cleanArticles } from '../../slices/newspaperSlice'
 
 export const Search = () => {
 
@@ -18,7 +18,7 @@ export const Search = () => {
   const onChange = ({ target }) => {
     const realValue = target.value.trim();
     setSearch({
-      value: realValue,
+      value: target.value,
       isValid: realValue.length > 3 ? true : false
     })
   }
@@ -33,7 +33,7 @@ export const Search = () => {
         isValid: false
       });
       dispatch(cleanArticles());
-      dispatch(getTitles(value))
+      dispatch(getTitles({ terms: value }))
     }
   }
 
@@ -46,7 +46,7 @@ export const Search = () => {
         <Form.Control
           type="text"
           id="inputSearch"
-          placeholder='Enter a word'
+          placeholder='Enter a word or a sentence'
           value={value}
           onChange={onChange}
           aria-describedby="searchHelpBlock"
@@ -54,7 +54,7 @@ export const Search = () => {
           isInvalid={!isValid}
         />
         <Form.Text id="searchHelpBlock" muted>
-          Please enter a more 3 letters long word
+          Please enter more than 3 letters
         </Form.Text>
       </form>
     </>

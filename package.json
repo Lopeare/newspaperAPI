@@ -1,5 +1,5 @@
 {
-  "name": "frontend-interview-master",
+  "name": "yarn",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,11 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.5",
     "@reduxjs/toolkit": "^1.8.5",
-    "bootstrap": "^5.2.0",
+    "bootstrap": "5.2.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
+    "react-paginate": "8.1.3",
     "react-redux": "^8.0.2",
     "react-router-dom": "6"
   },

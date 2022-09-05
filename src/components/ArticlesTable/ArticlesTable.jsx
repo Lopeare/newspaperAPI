@@ -5,16 +5,13 @@ export const ArticlesTable = () => {
 
     const { articles, isLoading } = useSelector((state) => state.newspaper)
     const lastSearch = useSelector((state) => state.search.history.at(-1).value)
-    console.log(articles)
-    console.log(isLoading)
+    // console.log(articles)
+    // console.log(isLoading)
 
     return (
-        <div className="dataTable">
+        <>
             <p>Results for {lastSearch}</p>
-
-
-
-            <Table striped>
+            <Table striped responsive>
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -38,7 +35,8 @@ export const ArticlesTable = () => {
                     })
                 }
             </Table>
-            {isLoading && <h1>Cargando</h1>}
-        </div>
+            {isLoading && <h1>Loading...</h1>}
+        </>
     )
+
 }
