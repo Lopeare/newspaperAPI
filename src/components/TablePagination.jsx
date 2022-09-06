@@ -1,19 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getTitles } from '../slices/apiThonk'
-import ReactPaginate from "https://cdn.skypack.dev/react-paginate@7.1.3";
+import { getTitles } from '../slices/apiThunk'
+import ReactPaginate from 'react-paginate';
 import { useEffect } from 'react';
+
 
 export const TablePagination = ({
     currentPage,
     itemsPerPage,
     setCurrentPage,
     setOffset,
+    doIRequest,
 }) => {
 
     const dispatch = useDispatch();
-    const lastSearch = useSelector((state) => state.search.history.at(-1))
-    const { articles, lastPage } = useSelector((state) => state.api)
+    const { articles, lastPage, noMorePages, isLoading, history } = useSelector((state) => state.api)
     const totalItems = articles.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    const lastSearch = history.at(-1).value
+
+
 
     const onPageChange = (event) => {
         const page = event.selected
@@ -25,12 +31,43 @@ export const TablePagination = ({
         );
     }
 
+    const checkIsLoading = () => {
+        if (isLoading) {
+
+            window.setTimeout(checkIsLoading, 100);
+        } else {
+            console.log('BUSQUEDA NUEVA')
+            const newPage = lastPage + 1
+            dispatch(getTitles({ terms: lastSearch, page: newPage }))
+        }
+    }
+
     useEffect(() => {
+        if (doIRequest) {
+            console.log('Current page: ', currentPage)
+            console.log('Total Pages: ', totalPages)
+            // We want to check in the last page
+            // currentPage start in 0 , totalPages in 1
+            if (currentPage >= totalPages - 2) {
 
-        //API call for more results
+                // Prevent double request with a property , and set that property as false in one component. ***********************************************
+
+                console.log('Pages?: ', noMorePages)
+                console.log(lastSearch,)
+
+                if (!noMorePages && !isLoading) {
+                    //poner aqui el setinterval para recalcular el valor del loading
+                    // https://stackoverflow.com/questions/22125865/wait-until-flag-true
+                    //checkIsLoading();
+                    console.log('BUSQUEDA NUEVA')
+                    const newPage = lastPage + 1
+                    dispatch(getTitles({ terms: lastSearch, page: newPage }))
+                }
+            }
+        }
 
 
-    }, [currentPage])
+    }, [currentPage]) // Setear el currentPage a 0 cuando se realice una nueva búsqueda
 
 
     return (
@@ -48,9 +85,9 @@ export const TablePagination = ({
                 nextClassName="page-item"
                 nextLinkClassName="page-link"
                 activeClassName="active"
-                onPageChange={(e) => onPageChange(e)}
+                onPageChange={onPageChange}
                 pageRangeDisplayed={3}
-                pageCount={Math.ceil(totalItems / itemsPerPage)}
+                pageCount={totalPages}
                 previousLabel="< previous"
                 renderOnZeroPageCount={null}
                 forcePage={currentPage}

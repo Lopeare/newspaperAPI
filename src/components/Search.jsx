@@ -24,7 +24,7 @@ export const Search = () => {
   // Only store the value when is valid (letters > 3)
   const onSubmit = (event) => {
     // Setear la pagina de las paginaciones *****************************************************************
-
+    // Cuando se hace una nueva búsqueda 
     event.preventDefault();
     if (isValid) {
       dispatch(addSearch(value));
@@ -39,6 +39,7 @@ export const Search = () => {
 
   return (
     <>
+      {/*  BOTON AL LADO DE LA BARRA DE BUSQUEDA ********************************************************** */}
       <form onSubmit={onSubmit}>
         <Form.Label
           htmlFor="searching article">Search

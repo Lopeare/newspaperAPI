@@ -7,7 +7,7 @@ export const Home = () => {
 
     const { articles } = useSelector((state) => state.api);
 
-    const [itemsPerPage, setItemsPerPage] = useState(10)
+    const [itemsPerPage, setItemsPerPage] = useState(50)
     const [currentPage, setCurrentPage] = useState(0)
     const [{ start, end }, setOffset] = useState({
         start: 0,
@@ -33,12 +33,14 @@ export const Home = () => {
 
     return (
         <>
+            <h1 className='m-4 p-4'>BUILD PAGINATION_SLICE</h1>
             <Search
                 setItemsPerPage={onSetItemsPerPage} />
 
             {articles.length > 0 && (
                 <>
                     <TablePagination
+                        doIRequest={true}
                         setCurrentPage={onSetCurrentPage}
                         currentPage={currentPage}
                         startOffset={start}
@@ -51,6 +53,7 @@ export const Home = () => {
                         endOffset={end} />
 
                     <TablePagination
+                        doIRequest={false}
                         setCurrentPage={onSetCurrentPage}
                         currentPage={currentPage}
                         startOffset={start}

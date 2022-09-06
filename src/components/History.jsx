@@ -3,7 +3,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 export const History = () => {
 
-    const { history } = useSelector((state) => state.search);
+    const { history } = useSelector((state) => state.api);
 
     return (
         <>

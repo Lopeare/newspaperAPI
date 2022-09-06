@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 export const ArticlesTable = ({ startOffset, endOffset }) => {
 
     const { articles, isLoading } = useSelector((state) => state.api)
-    const lastSearch = useSelector((state) => state.search.history.at(-1).value)
+    const lastSearch = useSelector((state) => state.api.history.at(-1).value)
     // console.log(articles)
     // console.log(isLoading)
 
