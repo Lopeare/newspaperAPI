@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux"
 import Table from 'react-bootstrap/Table';
 
-export const ArticlesTable = ({ startOffset, endOffset }) => {
+export const ArticlesTable = () => {
 
-    const { articles, isLoading } = useSelector((state) => state.api)
-    const lastSearch = useSelector((state) => state.api.history.at(-1).value)
+    const { articles, isLoading, history } = useSelector((state) => state.api)
+    const { startOffset, endOffset } = useSelector((state) => state.pagination)
+    const lastSearch = history.at(-1).value
     // console.log(articles)
     // console.log(isLoading)
 

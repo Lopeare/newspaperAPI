@@ -1,14 +1,17 @@
-import { addSearch, cleanArticles, getTitles } from '../slices'
-import { useDispatch } from 'react-redux';
+import { addSearch, cleanArticles, getTitles, setCurrentPage } from '../slices'
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import { setOffset } from '../slices/paginationSlice';
 
 export const Search = () => {
 
   const dispatch = useDispatch();
+  const lastSearch = useSelector((state) => state.api.lastSearch)
+  const itemsPerPage = useSelector((state) => state.pagination.lastSearch)
 
-  const [{ value, isValid }, setSearch] = useState({
-    value: 'Michigan',
+  const [{ inputValue, isValid }, setSearch] = useState({
+    inputValue: 'Michigan',
     isValid: true
   })
 
@@ -16,24 +19,24 @@ export const Search = () => {
   const onChange = ({ target }) => {
     const realValue = target.value.trim();
     setSearch({
-      value: target.value,
+      inputValue: target.value,
       isValid: realValue.length > 3 ? true : false
     })
   }
 
   // Only store the value when is valid (letters > 3)
   const onSubmit = (event) => {
-    // Setear la pagina de las paginaciones *****************************************************************
-    // Cuando se hace una nueva búsqueda 
     event.preventDefault();
-    if (isValid) {
-      dispatch(addSearch(value));
+    if (isValid && lastSearch != inputValue) {
+      dispatch(addSearch(inputValue));
       setSearch({
-        value: '',
+        inputValue: '',
         isValid: false
       });
+      dispatch(setCurrentPage(0))
+      dispatch(setOffset(0,))
       dispatch(cleanArticles());
-      dispatch(getTitles({ terms: value }))
+      dispatch(getTitles({ terms: inputValue }))
     }
   }
 
@@ -45,10 +48,12 @@ export const Search = () => {
           htmlFor="searching article">Search
         </Form.Label>
         <Form.Control
+          className="bi bi-search"
+
           type="text"
           id="inputSearch"
           placeholder='Enter a word or a sentence'
-          value={value}
+          value={inputValue}
           onChange={onChange}
           aria-describedby="searchHelpBlock"
           isValid={isValid}

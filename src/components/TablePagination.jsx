@@ -1,77 +1,66 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getTitles } from '../slices/apiThunk'
+import { getTitles, setCurrentPage, setItemsPerPage, setOffset } from '../slices'
 import ReactPaginate from 'react-paginate';
 import { useEffect } from 'react';
 
 
 export const TablePagination = ({
-    currentPage,
-    itemsPerPage,
-    setCurrentPage,
-    setOffset,
     doIRequest,
 }) => {
 
+    // Dispatch and Selectors
     const dispatch = useDispatch();
-    const { articles, lastPage, noMorePages, isLoading, history } = useSelector((state) => state.api)
-    const totalItems = articles.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const apiProps = useSelector((state) => state.api)
+    const paginationProps = useSelector((state) => state.pagination)
+    console.log(paginationProps)
 
-    const lastSearch = history.at(-1).value
+    // Necessary Data
+    const totalItems = apiProps.articles.length;
+    console.log('Total items --> ', apiProps.articles.length)
+    const totalPages = Math.ceil(totalItems / paginationProps.itemsPerPage);
+    console.log('items per page --> ', paginationProps.itemsPerPage)
+    const lastSearch = apiProps.lastSearch
 
 
 
     const onPageChange = (event) => {
         const page = event.selected
+        const start = page * paginationProps.itemsPerPage
+        const end = (page + 1) * paginationProps.itemsPerPage
+        // setCurrentPage(page)
+        dispatch(setCurrentPage(page))
 
-        setCurrentPage(page)
-        setOffset(
-            page * itemsPerPage,
-            (page + 1) * itemsPerPage
-        );
-    }
-
-    const checkIsLoading = () => {
-        if (isLoading) {
-
-            window.setTimeout(checkIsLoading, 100);
-        } else {
-            console.log('BUSQUEDA NUEVA')
-            const newPage = lastPage + 1
-            dispatch(getTitles({ terms: lastSearch, page: newPage }))
-        }
+        // setOffset(
+        //     page * paginationProps.itemsPerPage,
+        //     (page + 1) * paginationProps.itemsPerPage
+        // );
+        dispatch(setOffset({ start, end }))
     }
 
     useEffect(() => {
         if (doIRequest) {
-            console.log('Current page: ', currentPage)
+            console.log('Current page: ', paginationProps.currentPage)
             console.log('Total Pages: ', totalPages)
             // We want to check in the last page
             // currentPage start in 0 , totalPages in 1
-            if (currentPage >= totalPages - 2) {
+            if (paginationProps.currentPage >= totalPages - 2) {
+                console.log('Pages?: ', apiProps.noMorePages)
 
-                // Prevent double request with a property , and set that property as false in one component. ***********************************************
-
-                console.log('Pages?: ', noMorePages)
-                console.log(lastSearch,)
-
-                if (!noMorePages && !isLoading) {
-                    //poner aqui el setinterval para recalcular el valor del loading
-                    // https://stackoverflow.com/questions/22125865/wait-until-flag-true
-                    //checkIsLoading();
+                if (!apiProps.noMorePages && !apiProps.isLoading) {
                     console.log('BUSQUEDA NUEVA')
-                    const newPage = lastPage + 1
+                    const newPage = apiProps.lastPage + 1
                     dispatch(getTitles({ terms: lastSearch, page: newPage }))
                 }
             }
         }
 
 
-    }, [currentPage]) // Setear el currentPage a 0 cuando se realice una nueva búsqueda
+    }, [paginationProps.currentPage]) // Setear el currentPage a 0 cuando se realice una nueva búsqueda
 
-
+    // info result 1-50 of 452
     return (
         <>
+
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"
@@ -90,7 +79,7 @@ export const TablePagination = ({
                 pageCount={totalPages}
                 previousLabel="< previous"
                 renderOnZeroPageCount={null}
-                forcePage={currentPage}
+                forcePage={paginationProps.currentPage}
             />
         </>
     )
