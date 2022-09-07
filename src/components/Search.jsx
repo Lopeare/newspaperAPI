@@ -1,14 +1,18 @@
-import { addSearch, cleanArticles, getTitles, setCurrentPage } from '../slices'
+import { addSearch, cleanArticles, getTitles, setCurrentPage, setItemsPerPage, setOffset } from '../slices'
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { setOffset } from '../slices/paginationSlice';
+import { Button, InputGroup, NavLink } from 'react-bootstrap';
+import { Dropdown, DropdownButton } from "react-bootstrap";
+
+
 
 export const Search = () => {
 
   const dispatch = useDispatch();
   const lastSearch = useSelector((state) => state.api.lastSearch)
-  const itemsPerPage = useSelector((state) => state.pagination.lastSearch)
+  const itemsPerPage = useSelector((state) => state.pagination.itemsPerPage)
+  const configItemsPage = [10, 20, 30, 40, 50]
 
   const [{ inputValue, isValid }, setSearch] = useState({
     inputValue: 'Michigan',
@@ -34,32 +38,42 @@ export const Search = () => {
         isValid: false
       });
       dispatch(setCurrentPage(0))
-      dispatch(setOffset(0,))
       dispatch(cleanArticles());
       dispatch(getTitles({ terms: inputValue }))
     }
   }
 
+  const onDropDown = (itemsPerPage) => {
+    dispatch(setItemsPerPage(parseInt(itemsPerPage)))
+  }
+
   return (
     <>
-      {/*  BOTON AL LADO DE LA BARRA DE BUSQUEDA ********************************************************** */}
-      <form onSubmit={onSubmit}>
-        <Form.Label
-          htmlFor="searching article">Search
-        </Form.Label>
-        <Form.Control
-          className="bi bi-search"
-
-          type="text"
-          id="inputSearch"
-          placeholder='Enter a word or a sentence'
-          value={inputValue}
-          onChange={onChange}
-          aria-describedby="searchHelpBlock"
-          isValid={isValid}
-          isInvalid={!isValid}
-        />
-        <Form.Text id="searchHelpBlock" muted>
+      <form onSubmit={onSubmit} className="py-4">
+        <InputGroup>
+          <Form.Control
+            type="text"
+            id="inputSearch"
+            placeholder='Enter a word or a sentence'
+            value={inputValue}
+            onChange={onChange}
+            aria-describedby="searchHelpBlock"
+            isValid={isValid}
+            isInvalid={!isValid}
+          />
+          <Button
+            variant='success'
+            onClick={onSubmit}>
+            Search <i className="ms-2 bi-search"></i>
+          </Button>
+          <DropdownButton onSelect={onDropDown} id="dropdown-basic-button" title={`${itemsPerPage} Items/Page`}>
+            {
+              configItemsPage.map(value =>
+                <Dropdown.Item key={value} eventKey={value}>{value}</Dropdown.Item>)
+            }
+          </DropdownButton>
+        </InputGroup>
+        <Form.Text className='ps-3' id="searchHelpBlock" muted>
           Please enter more than 3 letters
         </Form.Text>
       </form>

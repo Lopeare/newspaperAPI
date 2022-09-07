@@ -4,15 +4,16 @@ import Table from 'react-bootstrap/Table';
 export const ArticlesTable = () => {
 
     const { articles, isLoading, history } = useSelector((state) => state.api)
-    const { startOffset, endOffset } = useSelector((state) => state.pagination)
+    const { startOffset, endOffset, itemsPerPage, currentPage } = useSelector((state) => state.pagination)
     const lastSearch = history.at(-1).value
-    // console.log(articles)
-    // console.log(isLoading)
 
-    console.log(startOffset + ' ' + endOffset)
+    const infoResultTable = `Results ${startOffset + 1} / 
+    ${itemsPerPage > articles.length ? articles.length : (itemsPerPage * (currentPage + 1))} 
+    of ${articles.length} from term ${lastSearch}`
+
     return (
         <>
-            <p>Results for {lastSearch}</p>
+            <p>{infoResultTable}</p>
             <Table striped responsive>
                 <thead>
                     <tr>

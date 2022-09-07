@@ -1,66 +1,46 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getTitles, setCurrentPage, setItemsPerPage, setOffset } from '../slices'
+import { getTitles, setCurrentPage } from '../slices'
 import ReactPaginate from 'react-paginate';
 import { useEffect } from 'react';
 
-
-export const TablePagination = ({
-    doIRequest,
-}) => {
+export const TablePagination = ({ amIConsumer }) => {
 
     // Dispatch and Selectors
     const dispatch = useDispatch();
     const apiProps = useSelector((state) => state.api)
     const paginationProps = useSelector((state) => state.pagination)
-    console.log(paginationProps)
 
     // Necessary Data
     const totalItems = apiProps.articles.length;
-    console.log('Total items --> ', apiProps.articles.length)
     const totalPages = Math.ceil(totalItems / paginationProps.itemsPerPage);
-    console.log('items per page --> ', paginationProps.itemsPerPage)
     const lastSearch = apiProps.lastSearch
-
-
 
     const onPageChange = (event) => {
         const page = event.selected
-        const start = page * paginationProps.itemsPerPage
-        const end = (page + 1) * paginationProps.itemsPerPage
-        // setCurrentPage(page)
         dispatch(setCurrentPage(page))
-
-        // setOffset(
-        //     page * paginationProps.itemsPerPage,
-        //     (page + 1) * paginationProps.itemsPerPage
-        // );
-        dispatch(setOffset({ start, end }))
     }
 
+    // Check if we need more data when current page or items per page value change
     useEffect(() => {
-        if (doIRequest) {
-            console.log('Current page: ', paginationProps.currentPage)
-            console.log('Total Pages: ', totalPages)
+        // In case that ItemsPerPage change from high to low value, the current page must be adapted
+        if (paginationProps.currentPage >= totalPages) {
+            dispatch(setCurrentPage(totalPages - 1))
+            console.log("Seteando Current Page a : ", totalPages - 1)
+        }
+        if (amIConsumer) {
             // We want to check in the last page
             // currentPage start in 0 , totalPages in 1
             if (paginationProps.currentPage >= totalPages - 2) {
-                console.log('Pages?: ', apiProps.noMorePages)
-
                 if (!apiProps.noMorePages && !apiProps.isLoading) {
-                    console.log('BUSQUEDA NUEVA')
                     const newPage = apiProps.lastPage + 1
                     dispatch(getTitles({ terms: lastSearch, page: newPage }))
                 }
             }
         }
+    }, [paginationProps.currentPage, paginationProps.itemsPerPage])
 
-
-    }, [paginationProps.currentPage]) // Setear el currentPage a 0 cuando se realice una nueva búsqueda
-
-    // info result 1-50 of 452
     return (
         <>
-
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"

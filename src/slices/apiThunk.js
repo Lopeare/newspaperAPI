@@ -7,16 +7,16 @@ export const getTitles = createAsyncThunk(
     'api/getTitles',
     // callback function
     async ({ terms, page = 1 }, thunkAPI) => {
-        console.log('terms: ', terms)
-        console.log('page ', page)
+        // console.log('terms: ', terms)
+        // console.log('page ', page)
         const uri = `${BASE_URI}?terms=${terms}&page=${page}&format=json`;
-        console.log(uri);
+        //console.log(uri);
         const res = fetch(uri)
             .then((data) => {
                 return data.json()
             })
             .catch((err) => {
-                console.log(err)
+                //console.log(err)
                 return thunkAPI.rejectWithValue('OOPS! Something went wrong. Maybe no more page to read.')
             })
 
