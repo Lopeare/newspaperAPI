@@ -1,3 +1,3 @@
+export * from './Details'
 export * from './Home'
 export * from './SearchHistory'
-export * from './DetailedArticle'

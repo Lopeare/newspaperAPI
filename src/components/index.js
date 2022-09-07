@@ -1,4 +1,5 @@
 export * from './ArticlesTable'
+export * from './DetailedArticle'
 export * from './Footer'
 export * from './History'
 export * from './NavigBar'

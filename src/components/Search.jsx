@@ -1,24 +1,27 @@
 import { addSearch, cleanArticles, getTitles, setCurrentPage, setItemsPerPage, setOffset } from '../slices'
+import { Button, InputGroup, NavLink } from 'react-bootstrap';
+import { Dropdown, DropdownButton } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { Button, InputGroup, NavLink } from 'react-bootstrap';
-import { Dropdown, DropdownButton } from "react-bootstrap";
 
 
 
 export const Search = () => {
 
+  const ITEMS_PAGE_SELECTION = [10, 20, 30, 40, 50]
+
+  // Hooks
   const dispatch = useDispatch();
   const lastSearch = useSelector((state) => state.api.lastSearch)
   const itemsPerPage = useSelector((state) => state.pagination.itemsPerPage)
-  const configItemsPage = [10, 20, 30, 40, 50]
 
   const [{ inputValue, isValid }, setSearch] = useState({
-    inputValue: 'Michigan',
-    isValid: true
+    inputValue: '',
+    isValid: false
   })
 
+  // Functions 
   // Updating input value
   const onChange = ({ target }) => {
     const realValue = target.value.trim();
@@ -64,11 +67,11 @@ export const Search = () => {
           <Button
             variant='success'
             onClick={onSubmit}>
-            Search <i className="ms-2 bi-search"></i>
+            <i className=" bi-search">Search</i>
           </Button>
           <DropdownButton onSelect={onDropDown} id="dropdown-basic-button" title={`${itemsPerPage} Items/Page`}>
             {
-              configItemsPage.map(value =>
+              ITEMS_PAGE_SELECTION.map(value =>
                 <Dropdown.Item key={value} eventKey={value}>{value}</Dropdown.Item>)
             }
           </DropdownButton>

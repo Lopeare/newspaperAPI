@@ -17,8 +17,8 @@ export const paginationSlice = createSlice({
             state.endOffset = state.startOffset + state.itemsPerPage
         },
         setItemsPerPage: (state, { payload }) => {
-            // console.log("Dentro del setItemsPerPate. Valor: ", payload)
             state.itemsPerPage = payload
+            state.startOffset = state.currentPage * state.itemsPerPage
             state.endOffset = state.startOffset + state.itemsPerPage
         },
 

@@ -20,17 +20,15 @@ export const TablePagination = ({ amIConsumer }) => {
         dispatch(setCurrentPage(page))
     }
 
-    // Check if we need more data when current page or items per page value change
     useEffect(() => {
-        // In case that ItemsPerPage change from high to low value, the current page must be adapted
+        // In case that ItemsPerPage change from low to high value, the current page must be adapted
         if (paginationProps.currentPage >= totalPages) {
             dispatch(setCurrentPage(totalPages - 1))
-            console.log("Seteando Current Page a : ", totalPages - 1)
         }
         if (amIConsumer) {
-            // We want to check in the last page
+            // We want to check in the last page if do another request
             // currentPage start in 0 , totalPages in 1
-            if (paginationProps.currentPage >= totalPages - 2) {
+            if (paginationProps.currentPage >= totalPages - 1) {
                 if (!apiProps.noMorePages && !apiProps.isLoading) {
                     const newPage = apiProps.lastPage + 1
                     dispatch(getTitles({ terms: lastSearch, page: newPage }))
@@ -38,6 +36,8 @@ export const TablePagination = ({ amIConsumer }) => {
             }
         }
     }, [paginationProps.currentPage, paginationProps.itemsPerPage])
+    // - current page --> if last, request more data if possible
+    // - items per page --> total pages can be less than current page
 
     return (
         <>

@@ -1,7 +1,6 @@
-import Container from 'react-bootstrap/Container';
+import { Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
 
 export const NavigBar = () => {
     return (
@@ -10,7 +9,6 @@ export const NavigBar = () => {
             <Nav>
                 <Nav.Link as={Link} to="/home">Home</Nav.Link>
                 <Nav.Link as={Link} to="/history">Search History</Nav.Link>
-                {/* <Nav.Link as={Link} to="/detailedArticle">Pricing</Nav.Link> */}
             </Nav>
         </Navbar>
     )

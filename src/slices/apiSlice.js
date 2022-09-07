@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 import { getTitles } from './apiThunk'
 
 const initialState = {
-    articles: [],
-    history: [],
-    isLoading: false,
-    lastPage: 0,
-    lastSearch: '',
-    noMorePages: false,
-    totalItemsForRead: 0
+    articles: [],        // articles read for a same term
+    history: [],         // Search history
+    isLoading: false,    // while fetching data
+    lastPage: 0,         // last page consumed
+    lastSearch: '',      // last search done
+    noMorePages: false,  // there no exist more resource pages
+    totalItemsForRead: 0 // maximum items that can be read for a term
 }
 
 export const apiSlice = createSlice({

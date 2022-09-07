@@ -7,7 +7,7 @@ export const History = () => {
 
     return (
         <>
-            <ListGroup className="list" variant="flush">
+            <ListGroup className="list pt-4" variant="flush">
                 {
                     history.slice(0).reverse().map(search =>
                         < ListGroup.Item
