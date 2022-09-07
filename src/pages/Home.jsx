@@ -9,7 +9,7 @@ export const Home = () => {
         <>
             <Search />
             {
-                isLoading &&
+                isLoading && articles.length == 0 &&
                 <p className='fs-1'>
                     Loading...
                 </p>
