@@ -1,3 +1,3 @@
-export * from './Details'
-export * from './Home'
-export * from './SearchHistory'
+export { default as Details } from './Details';
+export { default as Home } from './Home';
+export { default as SearchHistory } from './SearchHistory';

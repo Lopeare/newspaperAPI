@@ -1,9 +1,8 @@
-import { History } from "../components"
+import { History } from '../components';
 
-export const SearchHistory = () => {
-    return (
-        <>
-            <History />
-        </>
-    )
+function SearchHistory() {
+  return (
+    <History />
+  );
 }
+export default SearchHistory;

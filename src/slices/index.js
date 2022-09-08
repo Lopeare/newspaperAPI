@@ -1,3 +1,3 @@
 export * from './apiSlice';
-export * from './apiThunk'
-export * from './paginationSlice'
+export { default as getTitles } from './apiThunk';
+export * from './paginationSlice';

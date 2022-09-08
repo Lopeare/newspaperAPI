@@ -1,8 +1,9 @@
-import { DetailedArticle } from '../components'
-import React from 'react'
+import React from 'react';
+import { DetailedArticle } from '../components';
 
-export const Details = () => {
-    return (
-        <DetailedArticle />
-    )
+function Details() {
+  return (
+    <DetailedArticle />
+  );
 }
+export default Details;
