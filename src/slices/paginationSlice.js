@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+export const initialState = {
     currentPage: 0,
     itemsPerPage: 10,
     startOffset: 0,

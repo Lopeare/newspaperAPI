@@ -47,9 +47,6 @@ export const ArticlesTable = () => {
             }
             <p className="fw-light">{infoResultTable}</p>
 
-            {/* Loading when get more result for the same search */}
-            {isLoading && <h1>Loading...</h1>}
-
             <Table striped responsive>
                 <thead>
                     <tr>
