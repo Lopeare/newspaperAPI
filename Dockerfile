@@ -6,7 +6,13 @@ COPY . .
 
 COPY package*.json ./
 
-RUN npm install
+RUN apt-get update -y
+
+RUN apt install nodejs npm -y
+
+RUN npm install --global yarn
+
+RUN yarn
 
 EXPOSE 8080:8080
 
